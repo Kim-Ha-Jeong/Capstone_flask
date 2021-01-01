@@ -1,0 +1,38 @@
+.container-fluid{
+    width : 70%!important;
+    text-align: center;
+}
+
+#title{
+    text-align: center;
+    margin-top: 3%;
+}
+
+.table{
+    text-align: center;
+}
+
+.col-6{
+    text-align: center;
+}
+
+.line{
+    font-size: 28px;
+}
+
+form{
+    text-align: left;
+    padding: 0 20%;
+}
+
+#btn-wrap{
+    text-align: center;
+}
+
+#home{
+    margin: 2% 0 0 16.5%;
+}
+
+#list{
+    margin: 2% 0 0 29.2%;
+}
