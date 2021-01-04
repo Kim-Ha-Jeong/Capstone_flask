@@ -6,6 +6,9 @@ app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.config['JSON_AS_ASCII'] = False
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads/')
+
 
 @app.route('/')
 def show_url():
@@ -15,6 +18,12 @@ def show_url():
 @app.route("/video/<fileName>", methods=["GET"])
 def full(fileName):
     return render_template('video.html', data=fileName)
+
+
+@app.route("/uploads/<fileName>", methods=["GET"])
+def show_video(fileName):
+    path = UPLOAD_FOLDER + fileName
+    return send_file(path, mimetype='video')
 
 
 app.register_blueprint(user_api, url_prefix='/api')
