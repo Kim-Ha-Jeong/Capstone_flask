@@ -23,7 +23,7 @@ def full(fileName):
 @app.route("/uploads/<fileName>", methods=["GET"])
 def show_video(fileName):
     path = UPLOAD_FOLDER + fileName
-    return send_file(path, mimetype='video')
+    return send_file(path, mimetype='multipart/form')
 
 
 app.register_blueprint(user_api, url_prefix='/api')
@@ -32,6 +32,7 @@ app.register_blueprint(login_api)
 
 
 if __name__ == '__main__':
+    #app.run(debug=True)
     app.run(host='0.0.0.0',port='5001',debug=True)
 
 

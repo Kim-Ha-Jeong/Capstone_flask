@@ -2,6 +2,7 @@ import os
 from flask import request, jsonify, send_file, Blueprint, render_template, redirect
 from flask_restful import reqparse
 from werkzeug.utils import secure_filename
+import time
 
 from database import engine
 from extensions import allowed_file
@@ -15,27 +16,27 @@ full_api = Blueprint('full_api', __name__)
 @full_api.route('/full', methods=['POST'])
 def upload():
         f = request.files['full_video']
+
         fname = secure_filename(f.filename)
 
         path = UPLOAD_FOLDER + fname
 
         parser = reqparse.RequestParser()
-        parser.add_argument('date', type=str)
-        parser.add_argument('size', type=str)
         parser.add_argument('storage_path', type=str)
-        #parser.add_argument('user_id', type=str)
+        parser.add_argument('user_id', type=str)
         args = parser.parse_args()
 
         full_video = fname
-        date = args['date']
-        size = args['size']
+        date = time.strftime("%Y-%m-%d %H:%M:%S")
         storage_path = '/uploads/'+fname
-        #user_id = args['user_id']
+        user_id = args['user_id']
 
         if allowed_file(f.filename):
-            engine.execute("insert into full (full_video,date,size,storage_path, user_id) "
-                           "values (%s, %s, %s, %s, %s)", full_video, date, size, storage_path, "1")
             f.save(path)
+            size = os.stat(path).st_size
+            engine.execute("insert into full (full_video,date,size,storage_path, user_id) "
+                           "values (%s, %s, %s, %s, %s)", full_video, date, size, storage_path, user_id)
+
             return "ok"
         else:
             return "error"
