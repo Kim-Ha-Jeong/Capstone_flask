@@ -1,14 +1,14 @@
 import os
-from flask import request, jsonify, send_file, Blueprint, render_template, redirect
+from flask import request, Blueprint, render_template, redirect
 from flask_restful import reqparse
 from werkzeug.utils import secure_filename
 import time
 
-from database import engine
-from extensions import allowed_file
+from src.database import engine
+from src.extensions import allowed_file
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads/')
+UPLOAD_FOLDER = os.path.join(BASE_DIR, '../uploads/')
 
 full_api = Blueprint('full_api', __name__)
 

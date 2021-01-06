@@ -1,4 +1,5 @@
-config.py
+src/config.py
 .idea/
 __pycache__/
 uploads/
+edit_folder/

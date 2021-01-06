@@ -1,7 +1,7 @@
 from flask import Blueprint, session
 from flask_restful import reqparse
 
-from database import engine
+from src.database import engine
 
 login_api = Blueprint('login_api', __name__)
 

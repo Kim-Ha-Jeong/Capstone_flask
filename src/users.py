@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, Blueprint, request, session, render_template, redirect
+from flask import Blueprint, render_template, redirect
 from flask_restful import reqparse
-from database import *
+from src.database import *
 
 user_api = Blueprint('user_api', __name__)
 

@@ -1,7 +1,9 @@
-from fulls import *
-from users import *
-from login import *
-from edits import *
+from flask import send_file
+
+from src.fulls import *
+from src.users import *
+from src.login import *
+from src.edits import *
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
@@ -19,6 +21,7 @@ def show_url():
 @app.route("/video/<fileName>", methods=["GET"])
 def full(fileName):
     return render_template('video.html', data=fileName)
+
 
 @app.route("/edited/<fileName>", methods=["GET"])
 def edited(fileName):
