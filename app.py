@@ -1,6 +1,7 @@
 from fulls import *
 from users import *
 from login import *
+from edits import *
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
@@ -19,6 +20,10 @@ def show_url():
 def full(fileName):
     return render_template('video.html', data=fileName)
 
+@app.route("/edited/<fileName>", methods=["GET"])
+def edited(fileName):
+    return render_template('edited_video.html', data=fileName)
+
 
 @app.route("/uploads/<fileName>", methods=["GET"])
 def show_video(fileName):
@@ -26,8 +31,16 @@ def show_video(fileName):
     return send_file(path, mimetype='multipart/form')
 
 
+@app.route("/edit/<fileName>", methods=["GET"])
+def show_edit_video(fileName):
+    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'edit_folder/')
+    path = UPLOAD_FOLDER + fileName
+    return send_file(path, mimetype='multipart/form')
+
+
 app.register_blueprint(user_api, url_prefix='/api')
 app.register_blueprint(full_api, url_prefix='/api')
+app.register_blueprint(edit_api, url_prefix='/api')
 app.register_blueprint(login_api)
 
 

@@ -12,36 +12,40 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <title>Full 조회</title>
+    <title>Edited 조회</title>
 </head>
 
 <body>
 <a style="margin: 2% 0 0 9.0%" class="btn btn-primary" href="/">홈으로</a>
-<h1 id="title">Full 조회</h1>
+<h1 id="title">Edited 조회</h1>
 <br />
-<div class="container-fluid" style="...">
+<div class="container-fluid" style="width:85%!important">
     <table class="table">
         <thead>
         <tr>
             <th scope="col">id</th>
-            <!--<th scope="col">full_video</th>-->
+            <!--<th scope="col">video</th>-->
+            <th scope="col">score</th>
             <th scope="col">date</th>
             <th scope="col">size</th>
-            <th scope="col">storage_path</th>
+            <th scope="col">path</th>
             <th scope="col">user_id</th>
+            <th scope="col">full_id</th>
         </tr>
         </thead>
         <tbody>
         {% for data in datas %}
         <tr>
             <td>{{ data.id }}</td>
-            <!--<td>{{ data.full_video }}</td>-->
+            <!--<td>{{ data.edited_video }}</td>-->
+            <td>{{ data.anomaly_score }}</td>
             <td>{{ data.date }}</td>
             <td>{{ data.size }}</td>
-            <td><a href="/video/{{data.full_video}}">{{ data.storage_path }}</a></td>
+            <td><a href="/edited/{{data.edited_video}}">{{ data.path }}</a></td>
             <td>{{ data.user_id }}</td>
-            <!--<td><a href="/api/full/{{ data.id }}">수정</a></td>-->
-            <td><a href="/api/full/delete/{{ data.id }}">삭제</a></td>
+            <td>{{ data.full_id }}</td>
+            <td><a href="/api/edited/{{ data.id }}">수정</a></td>
+            <td><a href="/api/edited/delete/{{ data.id }}">삭제</a></td>
         </tr>
         {% endfor %}
         </tbody>
