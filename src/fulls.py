@@ -1,8 +1,8 @@
 import os
-from flask import request, Blueprint, render_template, redirect
-from flask_restful import reqparse
+from flask import request, redirect
 from werkzeug.utils import secure_filename
 import time
+from src.login import *
 
 from src.database import engine
 from src.extensions import allowed_file
@@ -43,9 +43,10 @@ def upload():
 
 
 @full_api.route('/full', methods=['GET'])
+@login_required
 def full_list():
-    result = engine.execute("select * from full")
-
+    user_id = current_user
+    result = engine.execute("select * from full where user_id=%s",user_id.get_id())
     return render_template('full.html', datas=result)
 
 

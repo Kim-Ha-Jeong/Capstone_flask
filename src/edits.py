@@ -1,11 +1,11 @@
 import os
-from flask import request, Blueprint, render_template, redirect
-from flask_restful import reqparse
+from flask import request,redirect
 from werkzeug.utils import secure_filename
 import time
 
 from src.database import engine
 from src.extensions import allowed_file
+from src.login import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, '../edit_folder/')
@@ -34,7 +34,7 @@ def upload():
             f.save(e_path)
             size = os.stat(e_path).st_size
             engine.execute("insert into edited (edited_video, anomaly_score, date, size,path, user_id, full_id) "
-                           "values (%s, %s, %s, %s, %s, %s, %s)", edited_video, anomaly_score, date, size, path, 1,1)
+                           "values (%s, %s, %s, %s, %s, %s, %s)", edited_video, anomaly_score, date, size, path, 2,3)
 
             return "ok"
         else:
@@ -42,8 +42,10 @@ def upload():
 
 
 @edit_api.route('/edited', methods=['GET'])
-def full_list():
-    result = engine.execute("select * from edited")
+@login_required
+def edited_list():
+    user = current_user
+    result = engine.execute("select * from edited where user_id=%s",user.get_id())
 
     return render_template('edited.html', datas=result)
 

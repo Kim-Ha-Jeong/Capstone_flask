@@ -1,16 +1,23 @@
 from flask import send_file
+from flask_login import LoginManager, login_user, current_user, logout_user
 
 from src.fulls import *
 from src.users import *
-from src.login import *
 from src.edits import *
+from src.login import *
 
 app = Flask(__name__)
-app.secret_key = 'super secret key'
+app.secret_key = os.urandom(24)
 app.config['JSON_AS_ASCII'] = False
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads/')
+
+@login_manager.user_loader
+def load_user(user_id):
+    return USERS[user_id]
 
 
 @app.route('/')
@@ -48,7 +55,7 @@ app.register_blueprint(login_api)
 
 
 if __name__ == '__main__':
-    #app.run(debug=True)
-    app.run(host='0.0.0.0',port='5001',debug=True)
+    app.run(debug=True)
+    #app.run(host='0.0.0.0',port='5001',debug=True)
 
 
