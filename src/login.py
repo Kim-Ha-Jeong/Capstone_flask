@@ -54,9 +54,12 @@ def login():
     password = args['password']
 
     result = engine.execute("select id from user where email=%s and password=%s", email, password)
-
+    result2 = engine.execute("select * from user")
     for row in result:
         uid = row['id']
+
+    for row in result2:
+        USERS.update({row[0] : User(user_id=row[0],email=row[1], password=row[2]) })
 
     login_user(USERS[uid], remember=True)
     return "ok"
