@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, render_template
-from flask_login import login_user, current_user, login_required
+from flask_login import login_user, current_user
 from flask_restful import reqparse
 from src.database import engine
 
@@ -37,10 +37,10 @@ class User:
         return False
 
 
-result2 = engine.execute("select * from user")
-USERS = {}
-for row in result2:
-    USERS.update({row[0] : User(user_id=row[0],email=row[1], password=row[2]) })
+#result2 = engine.execute("select * from user")
+#SERS = {}
+#for row in result2:
+#    USERS.update({row[0] : User(user_id=row[0],email=row[1], password=row[2]) })
 
 
 @login_api.route('/login', methods=['POST'])
