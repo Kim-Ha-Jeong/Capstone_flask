@@ -5,6 +5,11 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from utils.video_util import *
 
+import cv2
+import numpy as np
+import os
+from os.path import isfile, join
+
 
 def visualize_clip(clip, convert_bgr=False, save_gif=False, file_path=None):
     num_frames = len(clip)
@@ -56,8 +61,61 @@ def visualize_predictions(video_path, predictions, save_path):
 
     if save_path:
         plt.show()
-        #anim.save(save_path, dpi=200)
+        anim.save(save_path, writer='imagemagick', fps=240)
     else:
         plt.show()
+
+    return
+
+
+
+def get_edited_video(video_path, predictions, save_path):
+    # anomaly score 가 0.9 이상인 부분에 대해 앞뒤 1분간격으로 저장하는 코드 작성해야함
+    frames = get_video_frames(video_path)
+    assert len(frames) == len(predictions)
+
+    outpath = save_path
+    fps = 240
+    size =  (frames[0].shape[1],frames[0].shape[0])
+    print(size)
+
+    # 0.9 이상인 부분에 대해 앞뒤 1분주기로 자르는 알고리즘
+
+    # 1분 = 60*30 프레임
+    # 0.9 이상인 부분이 연속될 수 있으니, 처음/마지막 0.9이상인 부분에 대해 1분주기로 자름
+    '''
+    더 간단한 방법이 없으려나
+
+    first_frame = 0
+    last_frame = len(frames)-1
+    anomaly_first = -1
+
+    for i in len(frames):
+        if predictions[i]>=0.9:
+            if(anomaly_first==-1)
+                anomaly_first = i
+            anomaly_last = i
+
+    edit_first = anomaly_first - 1800
+    edit_last = anomaly_last + 1800
+
+    if(edit_first<first_frame):
+        edit_first = first_frame
+    if(edit_last>last_frame):
+        edit_last = last_frame
+
+    (한비디오 안에 anomaly 상황이 여러개 있을경우는 고려하지 못한 알고리즘)
+    '''
+
+
+
+    # 동영상 저장
+    fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+    out = cv2.VideoWriter(save_path,fourcc, fps, size)
+    for i in range(len(frames)):
+       frames[i] = cv2.cvtColor(frames[i], cv2.COLOR_BGR2RGB)
+       out.write(frames[i])
+    out.release()
+
 
     return
