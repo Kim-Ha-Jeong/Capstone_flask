@@ -15,22 +15,27 @@ full_api = Blueprint('full_api', __name__)
 
 
 @full_api.route('/full', methods=['POST'])
+@login_required
 def upload():
         f = request.files['full_video']
+        user = current_user
+        #parser = reqparse.RequestParser()
+        #parser.add_argument('user_id', type=str)
+        #args = parser.parse_args()
 
-        fname = secure_filename(f.filename)
+        user_id = user.get_id()
+        result = engine.execute("select * from full where user_id=%s", user_id)
+        i: int = 1
+        for x in result:
+            i = i+1
+
+        fname = "full0"+str(user_id)+"0"+str(i)+".mp4"
 
         path = UPLOAD_FOLDER + fname
-
-        parser = reqparse.RequestParser()
-        parser.add_argument('storage_path', type=str)
-        parser.add_argument('user_id', type=str)
-        args = parser.parse_args()
 
         full_video = fname
         date = time.strftime("%Y-%m-%d %H:%M:%S")
         storage_path = '/uploads/'+fname
-        user_id = args['user_id']
 
         if allowed_file(f.filename):
             f.save(path)
