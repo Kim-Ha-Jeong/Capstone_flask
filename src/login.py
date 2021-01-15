@@ -63,7 +63,7 @@ def login():
         USERS.update({row[0] : User(user_id=row[0],email=row[1], password=row[2]) })
 
     login_user(USERS[uid], remember=True)
-    return "ok"
+    return jsonify(uid)
 
 
 @login_api.route('/login', methods=['GET'])
