@@ -37,10 +37,10 @@ class User:
         return False
 
 
-#result2 = engine.execute("select * from user")
-#SERS = {}
-#for row in result2:
-#    USERS.update({row[0] : User(user_id=row[0],email=row[1], password=row[2]) })
+result2 = engine.execute("select * from user")
+USERS = {}
+for row in result2:
+   USERS.update({row[0] : User(user_id=row[0],email=row[1], password=row[2]) })
 
 
 @login_api.route('/login', methods=['POST'])
@@ -58,6 +58,7 @@ def login():
     for row in result:
         uid = row['id']
 
+    USERS = {}
     for row in result2:
         USERS.update({row[0] : User(user_id=row[0],email=row[1], password=row[2]) })
 

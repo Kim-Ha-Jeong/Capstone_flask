@@ -48,7 +48,7 @@ def upload():
 def full_list():
     user_id = current_user
     result = engine.execute("select * from full where user_id=%s",user_id.get_id())
-    return render_template('full.html', datas=result)
+    return render_template('full.html', datas=result, mimetype='application/json')
 
 
 @full_api.route('/full/<id>', methods=['GET'])
