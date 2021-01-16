@@ -24,8 +24,7 @@
         <thead>
         <tr>
             <th scope="col">id</th>
-            <!--<th scope="col">video</th>-->
-            <th scope="col">score</th>
+            <th scope="col">video</th>
             <th scope="col">date</th>
             <th scope="col">size</th>
             <th scope="col">path</th>
@@ -37,8 +36,7 @@
         {% for data in datas %}
         <tr>
             <td>{{ data.id }}</td>
-            <!--<td>{{ data.edited_video }}</td>-->
-            <td>{{ data.anomaly_score }}</td>
+            <td>{{ data.edited_video }}</td>
             <td>{{ data.date }}</td>
             <td>{{ data.size }}</td>
             <td><a href="/edited/{{data.edited_video}}">{{ data.path }}</a></td>
