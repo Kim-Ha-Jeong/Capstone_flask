@@ -25,7 +25,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads/')
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'input/')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -55,7 +55,7 @@ def show_video(fileName):
 
 @app.route("/edit/<fileName>", methods=["GET"])
 def show_edit_video(fileName):
-    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'edit_folder/')
+    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'output/')
     path = UPLOAD_FOLDER + fileName
     return send_file(path, mimetype='multipart/form')
 

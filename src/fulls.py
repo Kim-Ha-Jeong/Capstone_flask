@@ -9,7 +9,7 @@ from src.database import engine
 from src.extensions import allowed_file
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, '../uploads/')
+UPLOAD_FOLDER = os.path.join(BASE_DIR, '../input/')
 
 full_api = Blueprint('full_api', __name__)
 
@@ -35,7 +35,7 @@ def upload():
 
         full_video = fname
         date = time.strftime("%Y-%m-%d %H:%M:%S")
-        storage_path = '/uploads/'+fname
+        storage_path = '/input/'+fname
 
         if allowed_file(f.filename):
             f.save(path)
