@@ -1,6 +1,5 @@
 android/src/config.py
 .idea/
 __pycache__/
-uploads/
 edit_folder/
 trained_models/c3d_sports1m.h5

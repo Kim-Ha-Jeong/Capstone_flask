@@ -8,37 +8,9 @@ from src.extensions import allowed_file
 from src.login import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, '../edit_folder/')
+UPLOAD_FOLDER = os.path.join(BASE_DIR, '../output/')
 
 edit_api = Blueprint('edit_api', __name__)
-
-
-@edit_api.route('/edited', methods=['POST'])
-def upload():
-        f = request.files['edited_video']
-
-        fname = secure_filename(f.filename)
-
-        e_path = UPLOAD_FOLDER + fname
-
-        parser = reqparse.RequestParser()
-        parser.add_argument('anomaly_score', type=str)
-        args = parser.parse_args()
-
-        edited_video = fname
-        date = time.strftime("%Y-%m-%d %H:%M:%S")
-        path = '/edit_folder/'+fname
-        anomaly_score = args['anomaly_score']
-
-        if allowed_file(f.filename):
-            f.save(e_path)
-            size = os.stat(e_path).st_size
-            engine.execute("insert into edited (edited_video, anomaly_score, date, size,path, user_id, full_id) "
-                           "values (%s, %s, %s, %s, %s, %s, %s)", edited_video, anomaly_score, date, size, path, 2,3)
-
-            return "ok"
-        else:
-            return "error"
 
 
 @edit_api.route('/edited', methods=['GET'])
@@ -57,20 +29,42 @@ def show(id):
     return render_template('edited_update.html', datas=result)
 
 
-@edit_api.route('/edited/<id>', methods=['POST'])
-def update(id):
-    parser = reqparse.RequestParser()
-    parser.add_argument('anomaly_score', type=str)
-    args = parser.parse_args()
-
-    anomaly_score = args['anomaly_score']
-
-    engine.execute("update edited set anomaly_score=%s where id=%s", anomaly_score, id)
-    return redirect("/api/edited")
-
-
 @edit_api.route('/edited/delete/<id>', methods=['GET'])
 def delete(id):
     engine.execute("delete from edited where id=%s", id)
     return redirect("/api/edited")
 
+
+@edit_api.route('/edited/save', methods=['GET'])
+def save():
+    file_list = os.listdir(UPLOAD_FOLDER)
+    i = 0
+    for x in file_list:
+        if ".mp4" in x:
+            f = UPLOAD_FOLDER + x
+            fname = f.split("/")
+            list = x.split("0")
+
+            flag = 0
+
+            saved = engine.execute("select * from edited")
+            for y in saved:
+                if y.edited_video == fname[-1]:
+                    print(fname[-1]+" "+y.edited_video)
+                    flag  = 1
+                    break
+
+            if flag == 1:
+                continue
+
+            edited_video = fname[-1]
+            date = time.strftime("%Y-%m-%d %H:%M:%S")
+            size = os.stat(f).st_size
+            path = '/output/' + fname[-1]
+
+            engine.execute("insert into edited (edited_video, date, size,path, user_id, full_id) "
+                               "values (%s, %s, %s, %s, %s, %s)", edited_video, date, size, path, list[1],
+                               list[2])
+            i = i + 1
+
+    return str(i)+" rows add"
