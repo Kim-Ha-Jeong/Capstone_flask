@@ -1,5 +1,4 @@
 import matplotlib
-
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -61,7 +60,7 @@ def visualize_predictions(video_path, predictions, save_path):
 
     if save_path:
         plt.show()
-        anim.save(save_path, writer='imagemagick', fps=240)
+        anim.save(save_path, writer='imagemagick', fps=30)
     else:
         plt.show()
 
@@ -75,24 +74,21 @@ def get_edited_video(video_path, predictions, save_path):
     assert len(frames) == len(predictions)
 
     outpath = save_path
-    fps = 240
+    fps = 30
     size =  (frames[0].shape[1],frames[0].shape[0])
     print(size)
 
     # 0.9 이상인 부분에 대해 앞뒤 1분주기로 자르는 알고리즘
-
     # 1분 = 60*30 프레임
-    # 0.9 이상인 부분이 연속될 수 있으니, 처음/마지막 0.9이상인 부분에 대해 1분주기로 자름
-    '''
-    더 간단한 방법이 없으려나
 
     first_frame = 0
     last_frame = len(frames)-1
     anomaly_first = -1
+    anomaly_last = -1
 
-    for i in len(frames):
+    for i in range(len(frames)):
         if predictions[i]>=0.9:
-            if(anomaly_first==-1)
+            if(anomaly_first== -1):
                 anomaly_first = i
             anomaly_last = i
 
@@ -104,17 +100,19 @@ def get_edited_video(video_path, predictions, save_path):
     if(edit_last>last_frame):
         edit_last = last_frame
 
-    (한비디오 안에 anomaly 상황이 여러개 있을경우는 고려하지 못한 알고리즘)
-    '''
+    edit_frames = frames[edit_first:edit_last]
 
-
+    # 모두 정상적인 경우 저장하지 않음
+    if(anomaly_first==-1 & anomaly_last==-1):
+        print("정상 비디오")
+        return
 
     # 동영상 저장
     fourcc = cv2.VideoWriter_fourcc(*'DIVX')
     out = cv2.VideoWriter(save_path,fourcc, fps, size)
-    for i in range(len(frames)):
-       frames[i] = cv2.cvtColor(frames[i], cv2.COLOR_BGR2RGB)
-       out.write(frames[i])
+    for i in range(len(edit_frames)):
+       frames[i] = cv2.cvtColor(edit_frames[i], cv2.COLOR_BGR2RGB)
+       out.write(edit_frames[i])
     out.release()
 
 

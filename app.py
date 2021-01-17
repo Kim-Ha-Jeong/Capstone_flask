@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import flask
 import io
@@ -67,18 +68,15 @@ app.register_blueprint(login_api)
 
 
 ############## deep learning ##############
-def run_demo():
-    video_name = os.path.basename(cfg.sample_video_path).split('.')[0]
-
+def run_demo(video_name):
     # read video
-    video_clips, num_frames = get_video_clips(cfg.sample_video_path)
-
-    print("Number of clips in the video : ", len(video_clips))
+    new_video_path ='./input/'+video_name+'.mp4'
+    video_clips, num_frames = get_video_clips(new_video_path)
+    print("비디오 클립 수 : ", len(video_clips))
 
     # build models
     feature_extractor = c3d_feature_extractor()
     classifier_model = build_classifier_model()
-
     print("Models initialized")
 
     # extract features
@@ -87,13 +85,10 @@ def run_demo():
         clip = np.array(clip)
         if len(clip) < params.frame_count:
             continue
-
         clip = preprocess_input(clip)
         rgb_feature = feature_extractor.predict(clip)[0]
         rgb_features.append(rgb_feature)
-
         print("Processed clip : ", i)
-
 
     rgb_features = np.array(rgb_features)
 
@@ -102,51 +97,53 @@ def run_demo():
 
     # classify using the trained classifier model
     predictions = classifier_model.predict(rgb_feature_bag)
-
     predictions = np.array(predictions).squeeze()
-
     predictions = extrapolate(predictions, num_frames)
-
     print("predictions:",predictions)
 
+    # anomaly score txt 파일 저장
     anomaly_save_path = os.path.join(cfg.output_folder, video_name + '.txt')
-
     f = open(anomaly_save_path, 'w')
     for i in range(len(predictions)):
-    	data = str(predictions[i]) + '\n'
+    	data = str('{:.2f}\n'.format(predictions[i]) )
     	f.write(data)
     f.close()
 
-    # anomaly score 그래프 포함한 gif 저장
-    video_save_path = os.path.join(cfg.output_folder, video_name + '.gif')
-    visualize_predictions(cfg.sample_video_path, predictions, video_save_path)
-    print('Executed Successfully - ' + video_name + '.gif saved')
-
-
     # anomaly score 0.9 이상인 부분에 대해 앞뒤 1분 주기로 잘라서 mp4 저장
     edited_save_path = os.path.join(cfg.output_folder, video_name + '.mp4')
-    get_edited_video(cfg.sample_video_path, predictions, edited_save_path)
+    get_edited_video(new_video_path, predictions, edited_save_path)
     print('Executed Successfully - ' + video_name + '.mp4 saved')
-###############################################################################    
-    
-    
+
+    '''
+    # anomaly score 그래프 포함한 gif 저장
+    video_save_path = os.path.join(cfg.output_folder, video_name + '.gif')
+    visualize_predictions(new_video_path, predictions, video_save_path)
+    print('Executed Successfully - ' + video_name + '.gif saved')
+    '''
+
+###############################################################################
+
+
+
 
 ## localhost:5000/anomaly_score
 @app.route('/anomaly_score')
 def get_anomaly_score():
 
-    ### deeplearning ### 
-    run_demo()
-    #####################
-    
-    fileName = 'Normal_Videos_006_x264'
-    f = open('output/'+fileName+'.txt', 'r')
-    
-    return "</br>".join(f.readlines())
+    new_video_name = 'Explosion008_x264'
+    new_video_path = './input/'+new_video_name+'.mp4'
+    new_video_file = Path(new_video_path)
+
+    # 지정한 파일명에 대한 비디오가 있을 때에만 딥러닝 영상분석 시작
+    if new_video_file.is_file():
+        run_demo(new_video_name)
+        f = open('output/'+new_video_name+'.txt', 'r') # anomaly score txt 파일
+        return "</br>".join(f.readlines())
+
+    else:
+        return "</br>".join("없습니다.")
+
 
 if __name__ == '__main__':
     #app.run(debug=True)
     app.run(host='0.0.0.0',port='5001',debug=True, threaded=True)
-
-
-
