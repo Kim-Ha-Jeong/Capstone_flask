@@ -1,13 +1,14 @@
 import os
 from pathlib import Path
 
-from c3d import *
-from classifier import *
-from utils.visualization_util import *
+from anomaly_detection.c3d import *
+from anomaly_detection.classifier import *
+import anomaly_detection.configuration as cfg
+from anomaly_detection.utils.visualization_util import *
 
 def run_demo(video_name):
     # read video
-    new_video_path ='./input/'+video_name+'.mp4'
+    new_video_path =os.path.join(cfg.input_folder, video_name + '.mp4')
     video_clips, num_frames = get_video_clips(new_video_path)
     print("비디오 클립 수 : ", len(video_clips))
 
@@ -61,7 +62,7 @@ def run_demo(video_name):
 
 if __name__ == '__main__':
     new_video_name = 'Explosion008_x264'
-    new_video_path = './input/'+new_video_name+'.mp4'
+    new_video_path = os.path.join(cfg.input_folder, new_video_name + '.mp4')
     new_video_file = Path(new_video_path)
 
     # 지정한 파일명에 대한 비디오가 있을 때에만 딥러닝 영상분석 시작
