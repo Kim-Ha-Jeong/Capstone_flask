@@ -8,6 +8,10 @@ from src.login import *
 from src.database import engine
 from src.extensions import allowed_file
 
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from . import video_analysis
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(BASE_DIR, '../input/')
 
@@ -27,19 +31,22 @@ def upload():
         for x in result:
             i = i+1  #user가 저장한 파일 수
 
+        vname = "full0"+str(user_id)+"0"+str(i)
         fname = "full0"+str(user_id)+"0"+str(i)+".mp4" #저장할 파일이름 생성
 
         path = UPLOAD_FOLDER + fname  #저장할 경로 설정
 
         full_video = fname
         date = time.strftime("%Y-%m-%d %H:%M:%S")  #업로드한 날짜
-        storage_path = '/input/'+fname
+        storage_path = '/input/'+ fname
 
         if allowed_file(f.filename):  #동영상 파일
             f.save(path)   # 파일 저장
             size = os.stat(path).st_size  # 파일 크기
             engine.execute("insert into full (full_video,date,size,storage_path, user_id) "
                            "values (%s, %s, %s, %s, %s)", full_video, date, size, storage_path, user_id)
+
+            get_anomaly_score(vname) # 딥러닝 영상분석 결과 저장
 
             return full_video
         else:
@@ -87,4 +94,3 @@ def update(id):
 def delete(id):
     engine.execute("delete from full where id=%s", id)
     return redirect("/api/full")
-

@@ -48,7 +48,7 @@ def run_demo(video_name):
     f.close()
 
     # anomaly score 0.9 이상인 부분에 대해 앞뒤 1분 주기로 잘라서 mp4 저장
-    edited_save_path = os.path.join(cfg.output_folder, video_name + '.mp4')
+    edited_save_path = os.path.join(cfg.output_folder, 'edited' + video_name[4:9] + '01.mp4')
     get_edited_video(new_video_path, predictions, edited_save_path)
     print('Executed Successfully - ' + video_name + '.mp4 saved')
 
