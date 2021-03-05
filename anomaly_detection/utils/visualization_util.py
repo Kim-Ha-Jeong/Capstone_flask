@@ -2,7 +2,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-from utils.video_util import *
+from anomaly_detection.utils.video_util import *
 
 import cv2
 import numpy as np

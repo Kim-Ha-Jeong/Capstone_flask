@@ -10,7 +10,7 @@ from keras.models import Model
 from keras.models import Sequential
 from keras.utils.data_utils import get_file
 
-import configuration as cfg
+import anomaly_detection.configuration as cfg
 
 C3D_MEAN_PATH = 'https://github.com/adamcasson/c3d/releases/download/v0.1/c3d_mean.npy'
 

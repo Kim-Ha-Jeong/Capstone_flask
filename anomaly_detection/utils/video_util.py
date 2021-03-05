@@ -1,7 +1,7 @@
 import cv2
 
-import parameters as params
-from utils.array_util import *
+import anomaly_detection.parameters as params
+from anomaly_detection.utils.array_util import *
 
 
 def get_video_clips(video_path):
