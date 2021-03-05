@@ -22,7 +22,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'input/')
+INPUT_FOLDER = os.path.join(BASE_DIR, 'input/')
+OUTPUT_FOLDER = os.path.join(BASE_DIR, 'output/')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -34,27 +35,38 @@ def show_url():
     return render_template('url.html')
 
 
-@app.route("/video/<fileName>", methods=["GET"])
+# input 비디오 src
+@app.route("/input/<fileName>", methods=["GET"])
 def full(fileName):
-    return render_template('video.html', data=fileName)
+    path = INPUT_FOLDER + fileName
+
+    if os.path.isfile(path):
+        return send_file(path, mimetype='multipart/form')
+    else:
+        return 'error'
 
 
-@app.route("/edited/<fileName>", methods=["GET"])
+# output 비디오 src
+@app.route("/output/<fileName>", methods=["GET"])
 def edited(fileName):
-    return render_template('edited_video.html', data=fileName)
+        path = OUTPUT_FOLDER + fileName
+        if os.path.isfile(path):
+            return send_file(path, mimetype='multipart/form')
+        else:
+            return 'error'
 
 
-@app.route("/uploads/<fileName>", methods=["GET"])
+# full, edited 비디오 보여주는 화면
+@app.route("/video/<fileName>", methods=["GET"])
 def show_video(fileName):
-    path = UPLOAD_FOLDER + fileName
-    return send_file(path, mimetype='multipart/form')
-
-
-@app.route("/edit/<fileName>", methods=["GET"])
-def show_edit_video(fileName):
-    UPLOAD_FOLDER = os.path.join(BASE_DIR, 'output/')
-    path = UPLOAD_FOLDER + fileName
-    return send_file(path, mimetype='multipart/form')
+    output_path = OUTPUT_FOLDER + fileName
+    input_path = INPUT_FOLDER + fileName
+    if os.path.isfile(output_path):
+        return render_template('video.html', data=fileName, folder='output')
+    elif os.path.isfile(input_path):
+        return render_template('video.html', data=fileName, folder='input')
+    else:
+        return 'error'
 
 
 app.register_blueprint(user_api, url_prefix='/api')
