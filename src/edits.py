@@ -13,6 +13,7 @@ UPLOAD_FOLDER = os.path.join(BASE_DIR, '../output/')
 edit_api = Blueprint('edit_api', __name__)
 
 
+# 편집된 동영상 목록
 @edit_api.route('/edited', methods=['GET'])
 @login_required
 def edited_list():
@@ -35,6 +36,7 @@ def delete(id):
     return redirect("/api/edited")
 
 
+# 편집된 동영상 정보 저장
 @edit_api.route('/edited/save', methods=['GET'])
 def save():
     file_list = os.listdir(UPLOAD_FOLDER)
@@ -61,9 +63,10 @@ def save():
             date = time.strftime("%Y-%m-%d %H:%M:%S")
             size = os.stat(f).st_size
             path = '/output/' + fname[-1]
+            anomaly_score = 100
 
-            engine.execute("insert into edited (edited_video, date, size,path, user_id, full_id) "
-                               "values (%s, %s, %s, %s, %s, %s)", edited_video, date, size, path, list[1],
+            engine.execute("insert into edited (edited_video, anomaly_score, date, size,path, user_id, full_id) "
+                               "values (%s, %s, %s, %s, %s, %s, %s)", edited_video, anomaly_score, date, size, path, list[1],
                                list[2])
             i = i + 1
 

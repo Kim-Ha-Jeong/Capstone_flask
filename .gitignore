@@ -1,4 +1,4 @@
-android/src/config.py
+src/config.py
 .idea/
 __pycache__/
 edit_folder/
