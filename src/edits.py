@@ -36,6 +36,14 @@ def delete(id):
     return redirect("/api/edited")
 
 
+@edit_api.route('/edited/count', methods=['GET'])
+@login_required
+def total_num():
+    user = current_user
+    num = engine.execute("select count(*) from edited where user_id=%s", user.get_id())
+    return str(num.first()[0])
+
+
 # 편집된 동영상 정보 저장
 @edit_api.route('/edited/save', methods=['GET'])
 def save():

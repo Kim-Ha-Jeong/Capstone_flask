@@ -12,5 +12,5 @@ def get_anomaly_score(fileName):
         run_demo(new_video_name)
         return 'ok'
 
-    else
+    else:
         return 'error'
