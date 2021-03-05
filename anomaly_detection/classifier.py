@@ -3,7 +3,7 @@ from keras import Sequential
 from keras.layers import Dense, Dropout
 from keras.regularizers import l2
 
-import configuration as cfg
+import anomaly_detection.configuration as cfg
 
 
 def classifier_model():
