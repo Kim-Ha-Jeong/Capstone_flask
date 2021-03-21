@@ -54,16 +54,18 @@ def login():
     password = args['password']
 
     result = engine.execute("select id from user where email=%s and password=%s", email, password)
-    result2 = engine.execute("select * from user")
-    for row in result:
-        uid = row['id']
+    result3 = engine.execute("select * from user")
+    for data in result:
+        uid = data['id']
 
-    USERS = {}
-    for row in result2:
-        USERS.update({row[0] : User(user_id=row[0],email=row[1], password=row[2]) })
+    for data in result3:
+        USERS.update({data[0] : User(user_id=data[0],email=data[1], password=data[2]) })
 
-    login_user(USERS[uid], remember=True)
-    return jsonify(uid)
+    if USERS[uid] is None:
+        return "잘못된 입력입니다!"
+    else:
+        login_user(USERS[uid], remember=True)
+        return jsonify(uid)
 
 
 @login_api.route('/login', methods=['GET'])
