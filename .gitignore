@@ -1,4 +1,6 @@
 src/config.py
 .idea/
 __pycache__/
-anomaly_detection/trained_models/c3d_sports1m.h5
+input/
+output/
+/anomaly_detection/trained_models/c3d_sports1m.h5

@@ -7,6 +7,7 @@ from flask_login import login_required
 
 from src.extensions import allowed_file
 from src.login import *
+from src.edits import *
 
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from video_analysis import *
@@ -46,6 +47,7 @@ def upload():
                        "values (%s, %s, %s, %s, %s)", full_video, date, size, storage_path, user_id)
 
         get_anomaly_score(vname)  # 딥러닝 영상분석 결과 저장
+        save()
 
         return full_video
     else:
