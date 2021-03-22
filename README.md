@@ -1,5 +1,5 @@
 # Capstone_flask
-# 딥러닝 기반 자동편집 블랙박스 어플리케이션
+## Abnormal detection 활용한 자동편집 블랙박스 어플리케이션
 <img src="https://user-images.githubusercontent.com/61506233/100989312-15140e80-3594-11eb-956e-30632ad1a4c9.png" width="20%"> 
 
 ## 1) 시연영상
