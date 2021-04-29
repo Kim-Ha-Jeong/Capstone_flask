@@ -4,3 +4,4 @@ __pycache__/
 input/
 output/
 /anomaly_detection/trained_models/c3d_sports1m.h5
+venv/
