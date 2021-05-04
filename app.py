@@ -1,8 +1,3 @@
-import os
-from pathlib import Path
-
-import flask
-import io
 from flask import send_file
 from flask_login import LoginManager, login_user, current_user, logout_user
 
@@ -20,6 +15,7 @@ login_manager.init_app(app)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_FOLDER = os.path.join(BASE_DIR, 'input/')
 OUTPUT_FOLDER = os.path.join(BASE_DIR, 'output/')
+
 
 @login_manager.user_loader
 def load_user(user_id):
