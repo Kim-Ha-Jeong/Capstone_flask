@@ -7,6 +7,9 @@
 
 링크 : https://www.youtube.com/watch?v=DIdkWv8J9d8&feature=youtu.be
 
+![temp](https://user-images.githubusercontent.com/61506233/118226604-3f161900-b4c2-11eb-86bd-c919d5af8b86.gif)
+
+
 ## 2) 프로젝트 소개
 ### 개발 배경
 도로의 CCTV 역할을 하는 블랙박스는 현대사회에서 각종 사고 및 범죄 발생시 필수적인 증거 자료 활용되고있다. 
@@ -16,9 +19,7 @@
 따라서 본 프로젝트에서는 컴퓨터비전, 음성인식 관점에서 비정상적인 상황을 탐지하고 이부분만 따로 저장할 수 있도록 하는 기능을 제공하여 블랙박스 영상관리를 효율적으로 할 수 있도록 돕는다.
 
 자동편집 상황 예시)
-- 주행중 : 교통사고
-- 주차중 : 데이트폭력 및 추행, 납치, 기물파손, 배회, 폭행, 싸움, 절도, 실신, 침입, 투기, 강도, 납치, 주취행동 등 
-- 비명소리, 굉음
+데이트폭력 및 추행, 납치, 기물파손, 배회, 폭행, 싸움, 절도, 실신, 침입, 투기, 강도, 납치, 주취행동 등 
 
 
 ### 기능 및 시나리오
@@ -45,7 +46,8 @@
 ### System Overview
 ![image](https://user-images.githubusercontent.com/61506233/100989472-41c82600-3594-11eb-9ce9-3675edf1dbdb.png)
 
-<img src="https://user-images.githubusercontent.com/61506233/100991239-1e05df80-3596-11eb-9a5c-5473357e3f8b.png" width="70%"> 
+
+![image](https://user-images.githubusercontent.com/61506233/118226568-30c7fd00-b4c2-11eb-924d-7250cd8c7165.png)
 
 ## 3) Reference
 - [1] Yao, Y., Xu, M., Wang, Y., Crandall, D.J., Atkins, "Unsupervised traffic accident detection in first-person videos", in IROS, 2019  
@@ -56,42 +58,38 @@
 - [6] R. Mur-Artal and J. D. Tardos, “Orb-slam2: An open-source slam ´ system for monocular, stereo, and rgb-d cameras,” T-RO, 2017. 
 
 ## 4) 기술 블로그
-- 딥러닝 기술블로그 : https://kkminyoung.tistory.com/14
-- 안드로이드 기술블로그1 : https://csepotato.tistory.com/
-- 안드로이드 기술블로그2 : https://jungyoonn.tistory.com/
-- 백엔드 기술블로그 : https://cococode.tistory.com/
+- 딥러닝 기술블로그 : 
+- 안드로이드 기술블로그1 :
+- 안드로이드 기술블로그2 : 
+- 백엔드 기술블로그 : 
 
 ### 진행상황
-#### 딥러닝
-- [X] 문제정의 및 딥러닝 조사 https://kkminyoung.tistory.com/14
-- [X] 주행 중 모델 구축 https://kkminyoung.tistory.com/14
-- [X] 주차 중 모델 구축 https://kkminyoung.tistory.com/14
-- [X] 데이터 추가수집 https://kkminyoung.tistory.com/14
-- [ ] 음성인식 모델 구축
-- [ ] API 배포
 
 #### 안드로이드
-- [X] 인터페이스 구성     https://csepotato.tistory.com/3 , https://jungyoonn.tistory.com/3
-- [X] figma로 UI 구성    https://csepotato.tistory.com/2
-- [X] 회원가입/로그인 화면 구성  https://csepotato.tistory.com/4 , https://csepotato.tistory.com/5
-- [X] 메인 화면 구성            https://csepotato.tistory.com/4 , https://csepotato.tistory.com/5
+- [X] 인터페이스 구성  
+- [X] figma로 UI 구성  
+- [X] 회원가입/로그인 화면 구성 
+- [X] 메인 화면 구성         
 - [X] 영상 녹화 API 삽입
-- [ ] 수정 및 버그 캐치
+- [X] 신고창 구현
+
+#### 딥러닝
+- [X] 문제정의 및 딥러닝 조사
+- [X] 데이터 추가수집
+- [X] 주차 중 모델 구축 및 검증
+- [X] API 배포
 
 #### 백엔드
-- [X] 데이터베이스 설계 https://cococode.tistory.com/2
-- [X] 데이터베이스 구현 https://cococode.tistory.com/3
-- [X] Django + Mysql 연결 https://cococode.tistory.com/4
-- [X] Rest API(안드로이드용) https://cococode.tistory.com/5
-- [ ] AWS 호스팅
-- [ ] 앱 및 딥러닝 연결 
+- [X] 데이터베이스 설계 및 구현
+- [X] flask + Mysql 연결 
+- [X] Rest API(안드로이드용)
+- [X] AWS 호스팅
 
 
 ## 5) License
 Code is under the [Apache Licence v2](https://github.com/kkminyoung/Capstone_model/blob/master/LICENSE)
 
 # 프로젝트 레파지토리 정리
-- 딥러닝 repository : https://github.com/kkminyoung/Capstone_model
 - 안드로이드 repository : https://github.com/kkminyoung/Capstone_android
-- 서버 repository : https://github.com/Kim-Ha-Jeong/Capstone_server
+- 딥러닝 & 서버 repository : https://github.com/Kim-Ha-Jeong/Capstone_server
 
