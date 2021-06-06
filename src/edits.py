@@ -51,7 +51,6 @@ def total_num():
 
 
 # 편집된 동영상 정보 저장
-# @edit_api.route('/edited/save', methods=['GET'])
 def save():
     file_list = os.listdir(UPLOAD_FOLDER)
     i = 0
