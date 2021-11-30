@@ -3,8 +3,7 @@
 <img src="https://user-images.githubusercontent.com/61506233/100989312-15140e80-3594-11eb-956e-30632ad1a4c9.png" width="20%"> 
 
 ## 1) 시연영상
-https://user-images.githubusercontent.com/46347830/144000148-f1834319-c84a-4c37-93d1-cf305b21e223.mp4
-
+https://user-images.githubusercontent.com/46347830/144000284-7a7382a4-74c9-4df5-baa6-8a5c730eed57.mp4
 
 ![temp](https://user-images.githubusercontent.com/61506233/118226604-3f161900-b4c2-11eb-86bd-c919d5af8b86.gif)
 
