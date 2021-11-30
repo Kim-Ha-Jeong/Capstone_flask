@@ -3,9 +3,8 @@
 <img src="https://user-images.githubusercontent.com/61506233/100989312-15140e80-3594-11eb-956e-30632ad1a4c9.png" width="20%"> 
 
 ## 1) 시연영상
-[![매직박스 시연영상](https://img.youtube.com/vi/DIdkWv8J9d8/0.jpg)](https://www.youtube.com/watch?v=DIdkWv8J9d8&feature=youtu.be)
+https://user-images.githubusercontent.com/46347830/144000148-f1834319-c84a-4c37-93d1-cf305b21e223.mp4
 
-링크 : https://www.youtube.com/watch?v=DIdkWv8J9d8&feature=youtu.be
 
 ![temp](https://user-images.githubusercontent.com/61506233/118226604-3f161900-b4c2-11eb-86bd-c919d5af8b86.gif)
 
